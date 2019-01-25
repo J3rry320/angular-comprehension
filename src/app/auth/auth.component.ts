@@ -1,13 +1,14 @@
 import { Component, OnInit } from "@angular/core";
 import axios from "axios";
 import { CookieService } from "ngx-cookie-service";
+import { Router } from "@angular/router";
 @Component({
   selector: "app-auth",
   templateUrl: "./auth.component.html",
   styleUrls: ["./auth.component.css"]
 })
 export class AuthComponent implements OnInit {
-  constructor(private cookieService: CookieService) {}
+  constructor(private cookieService: CookieService, private router: Router) {}
   async getUser() {
     const data = await axios.post(
       "https://simulationapi.ur-nl.com/oauth/token.json",
@@ -26,15 +27,10 @@ export class AuthComponent implements OnInit {
     );
 
     const tokenData = data.data;
-    this.cookieService.set(
-      "UserID",
-      tokenData.access_token,
-      tokenData.expires_in
-    );
+    this.cookieService.set("UserID", tokenData.access_token);
+    this.router.navigate(["/comprehension"]);
   }
   async ngOnInit() {
-    this.cookieService.get("UserID")
-      ? console.log("Found User")
-      : this.getUser();
+    this.getUser();
   }
 }

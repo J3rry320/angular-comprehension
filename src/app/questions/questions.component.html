@@ -1,3 +1,15 @@
-<h2>{{questions.title | uppercase}} Details</h2>
-<div><span>id: </span>{{questions.id}}</div>
-<div><span>name: </span>{{questions.completed}}</div>
+<div>
+  <h1>
+    Now Answer
+  </h1>
+  <form clrform id="answers" (submit)="submit()">
+    <ul class="list-unstyled" *ngFor="let item of questionLength">
+      <li>
+        <p class="p1">{{item.question}}</p>
+        <textarea style="margin-top:15px" class="clr-col-12" type="text" placeholder="Your Answer" [(ngModel)]="answers[item.propName]"
+          name='{{item.name}}'></textarea>
+      </li>
+    </ul>
+    <button style="margin-top:40px" class="btn btn-outline btn-block">Submit</button>
+  </form>
+</div>
